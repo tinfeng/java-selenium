@@ -34,7 +34,7 @@ public class UntitledTestCase {
         //进入首页
         driver.get(baseUrl + "/index.html");
         //添加cookie
-        driver.manage().addCookie(new Cookie("SESSION", "e31688de-2fe7-4e46-a477-e2f2a1334221"));
+        driver.manage().addCookie(new Cookie("SESSION", "492c6f73-205c-4547-a281-6fd61be5aa44"));
         //刷新页面进行登陆
         driver.navigate().refresh();
         //搜索关键字落叶
@@ -66,14 +66,17 @@ public class UntitledTestCase {
         driver.findElement(By.xpath("(.//*[normalize-space(text()) and normalize-space(.)='以下商家未满足最小配送金额，是否继续？'])[1]/following::button[1]")).click();
         //立即支付
         driver.findElement(By.xpath("/html/body/div[1]/section/main/div/div[3]/button")).click();
-        Thread.sleep(25000);
+        Thread.sleep(28000);
         WebElement flag = driver.findElement(By.xpath("/html/body/div[1]/div[2]/div/span"));
         if (flag != null)
         {
-            flag.click();
+            System.out.println("未支付");
+            driver.findElement(By.xpath("/html/body/div[1]/div[2]/div/div/button[2]")).click();
+
         }
         else {
-            driver.findElement(By.xpath("/html/body/div[1]/div[2]/div/div/button[2]")).click();
+            System.out.println("下单成功,返回订单页面");
+            driver.findElement(By.xpath("//*[@id=\"app\"]/section/main/div[2]/button[1]")).click();
         }
         Thread.sleep(10000);
     }
