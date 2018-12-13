@@ -40,14 +40,18 @@ public class PC {
         //搜索关键字落叶
         driver.findElement(By.xpath("(.//*[normalize-space(text()) and normalize-space(.)='更多优惠等你'])[1]/following::input[1]")).sendKeys("落叶");
         driver.findElement(By.xpath("(.//*[normalize-space(text()) and normalize-space(.)='更多优惠等你'])[1]/following::img[2]")).click();
-        //按销量排序
+        //按价格排序
         driver.findElement(By.xpath("(.//*[normalize-space(text()) and normalize-space(.)='销量'])[1]/following::span[1]")).click();
+        Thread.sleep(5000);
+        driver.findElement(By.linkText("仅看有货")).click();
         Thread.sleep(5000);
         //鼠标停留在'折后约'上
         WebElement card = driver.findElement(By.xpath("/html/body/div[1]/section/main/div/div[3]/ul/li[1]/div/div[1]/div/h5/small"));
         Actions action = new Actions(driver);
         action.moveToElement(card).perform();
         Thread.sleep(2000);
+        //将商品数量改为2
+        driver.findElement(By.xpath("/html/body/div[1]/section/main/div/div[3]/ul/li[1]/div/div[4]/div/div/input")).sendKeys("2");
         //将价格最低的商品加入购物车
         driver.findElement(By.id("addCart")).click();
         //进入购物车
