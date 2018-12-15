@@ -2,6 +2,7 @@ import java.util.*;
 import java.util.NoSuchElementException;
 import java.util.concurrent.TimeUnit;
 import java.util.Set;
+
 import org.junit.*;
 import org.openqa.selenium.*;
 import org.openqa.selenium.WebDriver;
@@ -64,21 +65,29 @@ public class PC {
         //点击结算
         driver.findElement(By.xpath("/html/body/div/section/main/div/div/div[3]/button")).click();
         Thread.sleep(1000);
-        driver.findElement(By.xpath("/html/body/div[1]/div[1]/div/div[2]/div/div[2]/button[1]")).click();
+        WebElement Settlement = driver.findElement(By.xpath("//*[@id=\"app\"]/div[1]/div/div[2]/div"));
+        if (Settlement != null) {
+            driver.findElement(By.xpath("/html/body/div[1]/div[1]/div/div[2]/div/div[2]/button[1]")).click();
+        }
         //点击提交订单
-        driver.findElement(By.xpath("/html/body/div[1]/section/main/div/div/div[4]/div/button")).click();
-        driver.findElement(By.xpath("(.//*[normalize-space(text()) and normalize-space(.)='以下商家未满足最小配送金额，是否继续？'])[1]/following::button[1]")).click();
+        else {
+            driver.findElement(By.xpath("/html/body/div[1]/section/main/div/div/div[4]/div/button")).click();
+        }
+        WebElement Order = driver.findElement(By.xpath("//*[@id=\"app\"]/div[2]/div"));
+        if (Order != null) {
+            driver.findElement(By.xpath("(.//*[normalize-space(text()) and normalize-space(.)='以下商家未满足最小配送金额，是否继续？'])[1]/following::button[1]")).click();
+        }
         //立即支付
-        driver.findElement(By.xpath("/html/body/div[1]/section/main/div/div[3]/button")).click();
+        else {
+            driver.findElement(By.xpath("/html/body/div[1]/section/main/div/div[3]/button")).click();
+        }
         Thread.sleep(28000);
         WebElement flag = driver.findElement(By.xpath("/html/body/div[1]/div[2]/div/span"));
-        if (flag != null)
-        {
+        if (flag != null) {
             System.out.println("未支付");
             driver.findElement(By.xpath("/html/body/div[1]/div[2]/div/div/button[2]")).click();
 
-        }
-        else {
+        } else {
             System.out.println("下单成功,返回订单页面");
             driver.findElement(By.xpath("//*[@id=\"app\"]/section/main/div[2]/button[1]")).click();
         }
