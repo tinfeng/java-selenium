@@ -24,7 +24,8 @@ public class PC {
         System.setProperty("webdriver.chrome.driver", "D:\\JAVA\\chromedriver.exe");
         driver = new ChromeDriver();
         //设置浏览器大小
-        driver.manage().window().setSize(new Dimension(1280, 800));
+        //driver.manage().window().setSize(new Dimension(1280, 800));
+        driver.manage().window().maximize();
         //测试地址
         baseUrl = "http://139.159.241.7:9061";
         driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
@@ -35,52 +36,55 @@ public class PC {
         //进入首页
         driver.get(baseUrl + "/index.html");
         //添加cookie
-        driver.manage().addCookie(new Cookie("SESSION", "492c6f73-205c-4547-a281-6fd61be5aa44"));
+        driver.manage().addCookie(new Cookie("SESSION", "11122fc1-ec76-4abf-876f-cac2398e7881"));
         //刷新页面进行登陆
         driver.navigate().refresh();
         //搜索关键字落叶
-        driver.findElement(By.xpath("(.//*[normalize-space(text()) and normalize-space(.)='更多优惠等你'])[1]/following::input[1]")).sendKeys("落叶");
+        /*driver.findElement(By.xpath("(.//*[normalize-space(text()) and normalize-space(.)='更多优惠等你'])[1]/following::input[1]")).sendKeys("落叶");
         driver.findElement(By.xpath("(.//*[normalize-space(text()) and normalize-space(.)='更多优惠等你'])[1]/following::img[2]")).click();
         //按价格排序
         driver.findElement(By.xpath("(.//*[normalize-space(text()) and normalize-space(.)='销量'])[1]/following::span[1]")).click();
-        Thread.sleep(5000);
-        driver.findElement(By.linkText("仅看有货")).click();
-        Thread.sleep(5000);
-        //鼠标停留在'折后约'上
-        WebElement card = driver.findElement(By.xpath("/html/body/div[1]/section/main/div/div[3]/ul/li[1]/div/div[1]/div/h5/small"));
+        Thread.sleep(4000);
+        driver.findElement(By.xpath("//*[@id=\"app\"]/section/main/div/div[2]/div[1]/label[1]/span[1]/span")).click();
+        Thread.sleep(3000);
+        //鼠标停留在图片上
+        WebElement card = driver.findElement(By.xpath("//*[@id=\"app\"]/section/main/div/div[3]/ul/li[1]/div/a/img"));
         Actions action = new Actions(driver);
         action.moveToElement(card).perform();
         Thread.sleep(2000);
         //将商品数量改为2
+        driver.findElement(By.xpath("/html/body/div[1]/section/main/div/div[3]/ul/li[1]/div/div[4]/div/div/input")).clear();
         driver.findElement(By.xpath("/html/body/div[1]/section/main/div/div[3]/ul/li[1]/div/div[4]/div/div/input")).sendKeys("2");
         //将价格最低的商品加入购物车
-        driver.findElement(By.id("addCart")).click();
+        driver.findElement(By.id("addCart")).click();*/
         //进入购物车
-        driver.findElement(By.xpath("(.//*[normalize-space(text()) and normalize-space(.)='更多优惠等你'])[1]/following::button[1]")).click();
+        driver.findElement(By.xpath("//*[@id=\"app\"]/section/header/div[2]/div[1]/div[1]/div/div[1]/div[2]/button")).click();
         //切换标签页
         Set<String> winHandels = driver.getWindowHandles(); // 得到当前窗口的set集合
         List<String> it = new ArrayList<String>(winHandels); // 将set集合存入list对象
         driver.switchTo().window(it.get(1)); // 切换到弹出的新窗口
         Thread.sleep(1000);
         //点击结算
-        driver.findElement(By.xpath("/html/body/div/section/main/div/div/div[3]/button")).click();
+        driver.findElement(By.xpath("//*[@id=\"app\"]/section/main/div/div/div[3]/button")).click();
         Thread.sleep(1000);
-        WebElement Settlement = driver.findElement(By.xpath("//*[@id=\"app\"]/div[1]/div/div[2]/div"));
+        WebElement Settlement = driver.findElement(By.xpath("/html/body/div[1]/div[1]/div/div[2]/div"));
         if (Settlement != null) {
+            System.out.println(Settlement);
             driver.findElement(By.xpath("/html/body/div[1]/div[1]/div/div[2]/div/div[2]/button[1]")).click();
+            return;
         }
-        //点击提交订单
-        else {
-            driver.findElement(By.xpath("/html/body/div[1]/section/main/div/div/div[4]/div/button")).click();
-        }
-        WebElement Order = driver.findElement(By.xpath("//*[@id=\"app\"]/div[2]/div"));
+        driver.findElement(By.xpath("/html/body/div[1]/section/main/div/div/div[4]/div/button"));
+
+        System.out.println("123");
+        WebElement Order = driver.findElement(By.xpath("/html/body/div[1]/div[2]/div/div[2]/div"));
         if (Order != null) {
             driver.findElement(By.xpath("(.//*[normalize-space(text()) and normalize-space(.)='以下商家未满足最小配送金额，是否继续？'])[1]/following::button[1]")).click();
+            System.out.println(Order);
+            return;
         }
-        //立即支付
-        else {
-            driver.findElement(By.xpath("/html/body/div[1]/section/main/div/div[3]/button")).click();
-        }
+        System.out.println("312");
+        driver.findElement(By.xpath("/html/body/div[1]/section/main/div/div[3]/button")).click();
+
         Thread.sleep(28000);
         WebElement flag = driver.findElement(By.xpath("/html/body/div[1]/div[2]/div/span"));
         if (flag != null) {
