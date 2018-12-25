@@ -16,12 +16,14 @@ public class supplier {
     @Before
     public void setUp() throws Exception {
         //配置并打开浏览器
-        System.setProperty("webdriver.chrome.driver", "D:\\JAVA\\chromedriver.exe");
+        System.setProperty("webdriver.chrome.driver", "D:\\Documents\\driver\\chromedriver.exe");
         driver = new ChromeDriver();
         //设置浏览器大小
         driver.manage().window().setSize(new Dimension(1280, 800));
         //测试地址
-        baseUrl = "http://139.159.241.7:9041";
+//        baseUrl = "http://139.159.241.7:9041";    //华为云
+        baseUrl = "http://139.159.152.223:9041";  //3.6
+//        baseUrl = "https://store.caichufang.com";  //线上
         driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
         //进入首页
         driver.get(baseUrl + "/login.html");
